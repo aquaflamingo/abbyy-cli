@@ -22,7 +22,7 @@ module Abbyy
     end
   end
 
-  class Command < Thor
+  class Command
     class Region
       def initialize(location)
         @location = location
@@ -45,7 +45,6 @@ module Abbyy
       @client = Client.new(config)
     end
 
-    desc 'process FILE', 'Processes an image of a file'
     def process(file = '')
       task = @client.process_image_file(file)
       result = @client.poll_for_completion(task)
