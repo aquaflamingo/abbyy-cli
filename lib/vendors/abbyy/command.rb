@@ -37,9 +37,14 @@ module Abbyy
       super
       # Hydrate from environment
       config = Config.configure do |conf|
+        raise "APP_ID must be specified" unless ENV['APP_ID']
+        raise "APP_PASSWORD must be specified" unless ENV['APP_PASSWORD']
+        raise "APP_REGION must be specified" unless ENV['APP_REGION']
+
         conf.app_id = ENV['APP_ID']
-        conf.password = ENV['APP_PASSOWRD']
+        conf.password = ENV['APP_PASSWORD']
         conf.region = Region.new(ENV['APP_REGION'])
+        conf
       end
 
       @client = Client.new(config)

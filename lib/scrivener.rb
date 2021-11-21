@@ -7,15 +7,14 @@ require 'thor'
 module Scrivener
   class CLI < Thor
 
-    desc 'process FILE', 'Processes an image of a file'
-    method_option vendor: :string, required: true
-    def process(file = '')
-      raise "vendor must be specified" if options[:vendor].nil? || options[:vendor].empty?
-
-      case options[:vendor].to_sym
-      when
+    desc 'process [vendor] [file]', 'Processes an image of a file'
+    def process(vendor, file)
+      case vendor.to_sym
+      when :abbyy
         cmd = Abbyy::Command.new
         cmd.process(file)
+      else
+        puts "vendor #{vendor} is not supported"
       end
     end
 

@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'cgi'
 require_relative 'task'
 
 module Abbyy
