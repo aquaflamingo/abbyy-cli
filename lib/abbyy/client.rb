@@ -1,5 +1,6 @@
 require 'rexml/document'
 require 'cgi'
+require 'rest_client'
 require_relative 'task'
 
 module Abbyy
@@ -13,27 +14,28 @@ module Abbyy
     end
 
     def process_image_file(path)
-      raise ArgumentError, "file #{path} does not exist" if File.exist?(path)
+      raise ArgumentError, "file #{path} does not exist" unless File.exist?(path)
 
       file = File.new(path, 'rb')
 
       begin
-        resp = @rest_client.post(
+        resp = RestClient.post(
           "#{base_url}/processImage?language=#{LANGUAGE}&exportFormat=txt",
           upload: { file: file }
         )
-      rescue RestClient::ExceptionWithResponse => e
+      rescue ::RestClient::ExceptionWithResponse => e
         # Show processImage errors
         err = output_response_error(e.response)
         raise err.text
+      rescue ex
       else
         # Get task id from response xml to check task status later
-        ProcessImage.from_xml_document(resp)
+        Abbyy::ProcessImageTask.from_xml_document(resp)
       end
     end
 
     def poll_for_completion(task, interval = 2)
-      raise 'Invalid task id provided' if task.id.nil? || task.id.empy? || task.id.include?(Task::INVALID_TASK_ID)
+      raise 'Invalid task id provided' if task.id.nil? || task.id.empty? || task.id.include?(Task::INVALID_TASK_ID)
 
       local_task = task.clone
       # Per documentation TODO
@@ -43,13 +45,13 @@ module Abbyy
         begin
           task.wait(interval)
 
-          response = @restclient.get("#{@baseurl}/getTaskStatus?taskid=#{task.id}")
+          response = RestClient.get("#{base_url}/getTaskStatus?taskid=#{task.id}")
         rescue RestClient::ExceptionWithResponse => e
           # Show getTaskStatus errors
           err = output_response_error(e.response)
           raise err.txt
         else
-          local_task = ProcessImage.from_xml_document(response)
+          local_task = ProcessImageTask.from_xml_document(response)
         end
       end
 
@@ -59,7 +61,7 @@ module Abbyy
     end
 
     def download_text(url)
-      @restclient.get(url)
+      RestClient.get(url)
     end
 
     private

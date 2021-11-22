@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "lib/scrivener/version"
+require_relative "lib/abbyy/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "scrivener"
-  spec.version = Scrivener::VERSION
+  spec.name = "abbyy"
+  spec.version = Abbyy::VERSION
   spec.authors = ["Robert"]
   spec.email = ["16901597+aquaflamingo@users.noreply.github.com"]
 
   spec.summary = "CLI for OCR vendors"
   spec.description = "CLI for OCR vendors"
-  spec.homepage = "https://github.com/aquaflamingo/scrivener"
+  spec.homepage = "https://github.com/aquaflamingo/abbyy"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 

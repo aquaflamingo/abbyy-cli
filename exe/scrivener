@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require "scrivener"
-
-Scrivener::CLI.start(ARGV)
