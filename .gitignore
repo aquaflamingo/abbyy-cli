@@ -7,5 +7,6 @@
 /spec/reports/
 /tmp/
 /devlog/
-/scripts/*
+/scripts/local.sh
 .DS_Store
+exampledata/*.txt
