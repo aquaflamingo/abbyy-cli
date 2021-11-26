@@ -1,5 +1,5 @@
-## [Unreleased]
+## CHANGELOG
 
-## [0.1.0] - 2021-11-18
+## [0.1.0] - 2021-11-26
 
-- Initial release
+- Initial release 🎉
