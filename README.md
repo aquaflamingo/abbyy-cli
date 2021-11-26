@@ -10,7 +10,24 @@ git clone git@github.com:aquaflamingo/abbyy.git
 Install dependencies
 ```bash
 cd abbyy
-bundle install 
+
+# This will build a local gem package for you to install on your system if you choose to
+bundle exec rake install:local
+
+# This will install the gem to your current active gemset (e.g. rbenv, or rvm)
+gem install pkg/abbyy-0.1.0.gem
+
+abbyy help
+
+Commands:
+	 abbyy help
+	 abbyy process
+
+```
+
+If you don't want to install the gem, you can simply clone the repository and run:
+```bash
+bundle exec exe/abbyy process exampledata/dead-souls.png > dead-souls-results.txt
 ```
 
 ## Usage
@@ -26,10 +43,11 @@ export APP_REGION=<your_region> # only EU supported atm
 Alternatively, you can set up the values in the `scripts/example.env.sh` and simply `source` this file before hand (makes things easier, but, make sure you don't commit your credentials to version control!).
 
 
-### Using the CLI
+### Examples
 You can use the example data provided in `exampledata` folder, or provide your own file. Using the example data:
-```bash
-bundle exec exe/abbyy process exampledata/dead-souls.png > dead-souls-results.txt
+
+```
+abbyy process ./exampledata/dead-souls.png > dead-souls-results.txt
 ```
 
 The program will upload the `png` file to Abbyy's OCR cloud and perform recognition on it. Results are downloaded and sent to STDOUT. In the future, adding a flag for `OUTPUT` path would be cool. We can see the results by reading the file:
